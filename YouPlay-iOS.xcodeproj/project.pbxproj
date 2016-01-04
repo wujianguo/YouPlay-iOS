@@ -8,22 +8,104 @@
 
 /* Begin PBXBuildFile section */
 		812E2ACE1C37893F0007F852 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812E2ACD1C37893F0007F852 /* AppDelegate.swift */; };
-		812E2AD01C37893F0007F852 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812E2ACF1C37893F0007F852 /* ViewController.swift */; };
 		812E2AD31C37893F0007F852 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 812E2AD11C37893F0007F852 /* Main.storyboard */; };
 		812E2AD61C37893F0007F852 /* YouPlay_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 812E2AD41C37893F0007F852 /* YouPlay_iOS.xcdatamodeld */; };
 		812E2AD81C37893F0007F852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 812E2AD71C37893F0007F852 /* Assets.xcassets */; };
 		812E2ADB1C37893F0007F852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 812E2AD91C37893F0007F852 /* LaunchScreen.storyboard */; };
+		8154760E1C3A79B30075706E /* MovieListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8154760D1C3A79B30075706E /* MovieListCollectionViewController.swift */; };
+		815476281C3A7E3D0075706E /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815476271C3A7E3D0075706E /* SwiftyJSON.swift */; };
+		8154762A1C3A7E520075706E /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815476291C3A7E520075706E /* XCGLogger.swift */; };
+		815476431C3A83380075706E /* YouPlayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815476421C3A83380075706E /* YouPlayItem.swift */; };
+		815476441C3A845F0075706E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8154761A1C3A7E140075706E /* Alamofire.framework */; };
+		815476451C3A845F0075706E /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8154761A1C3A7E140075706E /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		815476191C3A7E140075706E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
+		8154761B1C3A7E140075706E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS Tests";
+		};
+		8154761D1C3A7E140075706E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
+			remoteInfo = "Alamofire OSX";
+		};
+		8154761F1C3A7E140075706E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
+			remoteInfo = "Alamofire OSX Tests";
+		};
+		815476211C3A7E140075706E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626EF1BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS";
+		};
+		815476231C3A7E140075706E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626F81BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS Tests";
+		};
+		815476251C3A7E140075706E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4202FE01B667AA100C997FB;
+			remoteInfo = "Alamofire watchOS";
+		};
+		815476461C3A845F0075706E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8154763D1C3A80DE0075706E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				815476451C3A845F0075706E /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		812E2ACA1C37893F0007F852 /* YouPlay-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "YouPlay-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		812E2ACD1C37893F0007F852 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		812E2ACF1C37893F0007F852 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		812E2AD21C37893F0007F852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		812E2AD51C37893F0007F852 /* YouPlay_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YouPlay_iOS.xcdatamodel; sourceTree = "<group>"; };
 		812E2AD71C37893F0007F852 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		812E2ADA1C37893F0007F852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		812E2ADC1C37893F0007F852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8154760D1C3A79B30075706E /* MovieListCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewController.swift; sourceTree = "<group>"; };
+		8154760F1C3A7E140075706E /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = SOURCE_ROOT; };
+		815476271C3A7E3D0075706E /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = SwiftyJSON/Source/SwiftyJSON.swift; sourceTree = SOURCE_ROOT; };
+		815476291C3A7E520075706E /* XCGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCGLogger.swift; path = XCGLogger/XCGLogger/Library/XCGLogger/XCGLogger.swift; sourceTree = SOURCE_ROOT; };
+		815476421C3A83380075706E /* YouPlayItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouPlayItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				815476441C3A845F0075706E /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +139,57 @@
 		812E2ACC1C37893F0007F852 /* YouPlay-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				812E2ACD1C37893F0007F852 /* AppDelegate.swift */,
-				812E2ACF1C37893F0007F852 /* ViewController.swift */,
-				812E2AD11C37893F0007F852 /* Main.storyboard */,
-				812E2AD71C37893F0007F852 /* Assets.xcassets */,
-				812E2AD91C37893F0007F852 /* LaunchScreen.storyboard */,
-				812E2ADC1C37893F0007F852 /* Info.plist */,
-				812E2AD41C37893F0007F852 /* YouPlay_iOS.xcdatamodeld */,
+				8154760C1C3A796C0075706E /* Frameworks */,
+				8154760A1C3A79470075706E /* Resources */,
+				8154760B1C3A79600075706E /* Classes */,
 			);
 			path = "YouPlay-iOS";
+			sourceTree = "<group>";
+		};
+		8154760A1C3A79470075706E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				812E2AD41C37893F0007F852 /* YouPlay_iOS.xcdatamodeld */,
+				812E2ADC1C37893F0007F852 /* Info.plist */,
+				812E2AD71C37893F0007F852 /* Assets.xcassets */,
+				812E2AD11C37893F0007F852 /* Main.storyboard */,
+				812E2AD91C37893F0007F852 /* LaunchScreen.storyboard */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		8154760B1C3A79600075706E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				812E2ACD1C37893F0007F852 /* AppDelegate.swift */,
+				8154760D1C3A79B30075706E /* MovieListCollectionViewController.swift */,
+				815476421C3A83380075706E /* YouPlayItem.swift */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		8154760C1C3A796C0075706E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				815476291C3A7E520075706E /* XCGLogger.swift */,
+				815476271C3A7E3D0075706E /* SwiftyJSON.swift */,
+				8154760F1C3A7E140075706E /* Alamofire.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		815476101C3A7E140075706E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8154761A1C3A7E140075706E /* Alamofire.framework */,
+				8154761C1C3A7E140075706E /* Alamofire iOS Tests.xctest */,
+				8154761E1C3A7E140075706E /* Alamofire.framework */,
+				815476201C3A7E140075706E /* Alamofire OSX Tests.xctest */,
+				815476221C3A7E140075706E /* Alamofire.framework */,
+				815476241C3A7E140075706E /* Alamofire tvOS Tests.xctest */,
+				815476261C3A7E140075706E /* Alamofire.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,10 +202,12 @@
 				812E2AC61C37893F0007F852 /* Sources */,
 				812E2AC71C37893F0007F852 /* Frameworks */,
 				812E2AC81C37893F0007F852 /* Resources */,
+				8154763D1C3A80DE0075706E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				815476471C3A845F0075706E /* PBXTargetDependency */,
 			);
 			name = "YouPlay-iOS";
 			productName = "YouPlay-iOS";
@@ -113,12 +240,70 @@
 			mainGroup = 812E2AC11C37893F0007F852;
 			productRefGroup = 812E2ACB1C37893F0007F852 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 815476101C3A7E140075706E /* Products */;
+					ProjectRef = 8154760F1C3A7E140075706E /* Alamofire.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				812E2AC91C37893F0007F852 /* YouPlay-iOS */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8154761A1C3A7E140075706E /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 815476191C3A7E140075706E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8154761C1C3A7E140075706E /* Alamofire iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire iOS Tests.xctest";
+			remoteRef = 8154761B1C3A7E140075706E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8154761E1C3A7E140075706E /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 8154761D1C3A7E140075706E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		815476201C3A7E140075706E /* Alamofire OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire OSX Tests.xctest";
+			remoteRef = 8154761F1C3A7E140075706E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		815476221C3A7E140075706E /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 815476211C3A7E140075706E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		815476241C3A7E140075706E /* Alamofire tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire tvOS Tests.xctest";
+			remoteRef = 815476231C3A7E140075706E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		815476261C3A7E140075706E /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 815476251C3A7E140075706E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		812E2AC81C37893F0007F852 /* Resources */ = {
@@ -138,13 +323,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				812E2AD01C37893F0007F852 /* ViewController.swift in Sources */,
+				8154760E1C3A79B30075706E /* MovieListCollectionViewController.swift in Sources */,
+				8154762A1C3A7E520075706E /* XCGLogger.swift in Sources */,
+				815476431C3A83380075706E /* YouPlayItem.swift in Sources */,
 				812E2ACE1C37893F0007F852 /* AppDelegate.swift in Sources */,
 				812E2AD61C37893F0007F852 /* YouPlay_iOS.xcdatamodeld in Sources */,
+				815476281C3A7E3D0075706E /* SwiftyJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		815476471C3A845F0075706E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire iOS";
+			targetProxy = 815476461C3A845F0075706E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		812E2AD11C37893F0007F852 /* Main.storyboard */ = {
@@ -253,6 +449,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "YouPlay-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wujianguo.YouPlay-iOS";
@@ -264,6 +461,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "YouPlay-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wujianguo.YouPlay-iOS";
@@ -290,6 +488,7 @@
 				812E2AE11C37893F0007F852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
