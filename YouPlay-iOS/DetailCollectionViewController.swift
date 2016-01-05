@@ -21,24 +21,35 @@ class DetailCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        collectionView?.backgroundColor = UIColor.whiteColor()
+        queryDetail(detailApi) { (d) -> Void in
+            self.detail = d
+            self.collectionView?.reloadData()
+        }
     }
 
 
     // MARK: UICollectionViewDataSource
 
+    var detailApi = ""
+    var detail: YouPlayDetail?
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if let d = detail {
+            if d.sources.count > 0 {
+                return d.sources[0].titles.count
+            }
+        }
+        return 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DetailItemCollectionCell", forIndexPath: indexPath)
-    
+        cell.backgroundColor = UIColor.redColor()
         return cell
     }
 

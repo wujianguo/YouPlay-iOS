@@ -16,12 +16,29 @@ struct YouPlayItem {
     var rating = ""
     var thumb = ""
     var title = ""
+    var detail = ""
     var actors = [String]()
 }
 
+struct YouPlaySource {
+    var status = ""
+    var site = ""
+    var name = ""
+    var icon = ""
+    var urls = [String]()
+    var titles = [String]()
+}
 
 struct YouPlayDetail {
-    
+    var status = ""
+    var rating = ""
+    var thumb = ""
+    var title = ""
+    var pub = ""
+    var sum = ""
+    var actors = [String]()
+
+    var sources = [YouPlaySource]()
 }
 
 func queryItems(page: Int, complete: (items: [YouPlayItem]) -> Void) {
@@ -46,9 +63,46 @@ func queryItems(page: Int, complete: (items: [YouPlayItem]) -> Void) {
                 rating: item["rating"].stringValue,
                 thumb: item["thumb"].stringValue,
                 title: item["title"].stringValue,
+                detail: item["detail"].stringValue,
                 actors: actors
                 ))
         }
         complete(items: l)
     }
 }
+
+
+func queryDetail(detailApi: String, complete: (YouPlayDetail?) -> Void) {
+    Alamofire.request(.GET, "\(api)\(detailApi)").responseJSON { (data) -> Void in
+        guard data.result.isSuccess && data.data != nil else {
+            complete(nil)
+            return
+        }
+        let json = JSON(data: data.data!)
+        guard json["err"].int == 0 else {
+            complete(nil)
+            return
+        }
+        var detail = YouPlayDetail()
+        detail.status = json["data"]["status"].stringValue
+        detail.rating = json["data"]["rating"].stringValue
+        detail.thumb = json["data"]["thumb"].stringValue
+        detail.title = json["data"]["name"].stringValue
+        detail.pub = json["data"]["pub"].stringValue
+        detail.sum = json["data"]["sum"].stringValue
+        for s in json["data"]["sources"].arrayValue {
+            var source = YouPlaySource()
+            source.status = s["status"].stringValue
+            source.site = s["site"].stringValue
+            source.name = s["name"].stringValue
+            source.icon = s["icon"].stringValue
+            for it in s["episodes"].arrayValue {
+                source.urls.append(it["url"].stringValue)
+                source.titles.append(it["title"].stringValue)
+            }
+            detail.sources.append(source)
+        }
+        complete(detail)
+    }
+}
+

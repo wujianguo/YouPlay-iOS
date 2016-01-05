@@ -158,6 +158,16 @@ class MovieListCollectionViewController: UICollectionViewController {
         flowLayout?.invalidateLayout()
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let dvc = segue.destinationViewController as? DetailCollectionViewController {
+            if let cell = sender as? UICollectionViewCell {
+                if let indexPath = collectionView?.indexPathForCell(cell) {
+                    dvc.detailApi = items[indexPath.row].detail
+                }
+            }
+        }
+    }
+    
     
     // MARK: UICollectionViewDataSource
     var items = [YouPlayItem]()
