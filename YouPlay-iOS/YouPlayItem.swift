@@ -9,13 +9,19 @@
 import UIKit
 import Alamofire
 
-private var api = "https://youplay.avosapps.com/api/v1/"
+private var api = "https://youplay.avosapps.com/api/v1"
 
 struct YouPlayItem {
     var status = ""
     var rating = ""
     var thumb = ""
     var title = ""
+    var actors = [String]()
+}
+
+
+struct YouPlayDetail {
+    
 }
 
 func queryItems(page: Int, complete: (items: [YouPlayItem]) -> Void) {
@@ -25,37 +31,24 @@ func queryItems(page: Int, complete: (items: [YouPlayItem]) -> Void) {
             return
         }
         let json = JSON(data: data.data!)
-        guard json["err"].int == 0 && json["data"].array != nil else {
+        guard json["err"].int == 0 else {
             complete(items: [])
             return
         }
         var l: [YouPlayItem] = []
-        for item in json["data"].array! {
+        for item in json["data"].arrayValue {
+            var actors = [String]()
+            for actor in item["actors"].arrayValue {
+                actors.append(actor.stringValue)
+            }
             l.append(YouPlayItem(
                 status: item["status"].stringValue,
                 rating: item["rating"].stringValue,
                 thumb: item["thumb"].stringValue,
-                title: item["title"].stringValue
+                title: item["title"].stringValue,
+                actors: actors
                 ))
         }
         complete(items: l)
-    }
-}
-
-extension UIImageView {
-    func setImageWithUrlString(str: String?) {
-        if let url = NSURL(string: str ?? "") {
-            setImageWithURL(url)
-        }
-    }
-    
-    func setImageWithURL(url: NSURL) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) -> Void in
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                if data != nil {
-                    self.image = UIImage(data: data!)
-                }
-            }
-            }.resume()
     }
 }
