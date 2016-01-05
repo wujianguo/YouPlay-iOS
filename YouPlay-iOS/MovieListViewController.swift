@@ -1,8 +1,8 @@
 //
-//  MovieListCollectionViewController.swift
+//  MovieListViewController.swift
 //  YouPlay-iOS
 //
-//  Created by 吴建国 on 16/1/4.
+//  Created by wujianguo on 16/1/5.
 //  Copyright © 2016年 wujianguo. All rights reserved.
 //
 
@@ -67,10 +67,6 @@ class MovieItemCollectionViewCell: UICollectionViewCell {
         actors.font = UIFont.systemFontOfSize(12)
         
         nameLabel.numberOfLines = 0
-//        nameLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
-//        statusLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
-//        rationgLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
-//        actors.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         
         contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 4
@@ -102,7 +98,7 @@ class MovieItemCollectionViewCell: UICollectionViewCell {
             make.left.right.equalTo(nameLabel)
             make.bottom.lessThanOrEqualTo(rationgLabel.snp_top).offset(-12)
         }
-
+        
         statusLabel.snp_makeConstraints { (make) -> Void in
             make.left.right.equalTo(nameLabel)
             make.bottom.lessThanOrEqualTo(actors.snp_top).offset(-12)
@@ -111,7 +107,12 @@ class MovieItemCollectionViewCell: UICollectionViewCell {
     
     func setupBackgroundEffect() {
         if let image = thumbImage.image {
-            contentView.backgroundColor = UIColor(patternImage: contentView.darkEffectImage(image))
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+                let color = UIColor(patternImage: self.contentView.darkEffectImage(image))
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                    self.contentView.backgroundColor = color
+                }
+            }
         }
     }
     
@@ -122,20 +123,43 @@ class MovieItemCollectionViewCell: UICollectionViewCell {
     
 }
 
-
-class MovieListCollectionViewController: UICollectionViewController {
+class MovieListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        titleButton.setTitle("电视剧 ▾", forState: .Normal)
+        titleButton.addTarget(self, action: "titleButtonClick", forControlEvents: .TouchUpInside)
+        navigationItem.titleView = titleButton
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         collectionView?.backgroundColor = UIColor.clearColor()
-        queryItems(1) { (items) -> Void in
-            self.items.appendContentsOf(items)
-            self.collectionView?.reloadData()
-            if items.count > 0 {
-                self.setupBackgroundEffect(items[0].thumb)
-            }
-        }
+        requestMoreData()
+    }
+    
+    let titleButton = UIButton()
+    
+    func titleButtonClick() {
+        let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        actionController.addAction(UIAlertAction(title: "电视剧", style: .Default, handler: { (action) -> Void in
+            self.titleButton.setTitle("电视剧 ▾", forState: .Normal)
+        }))
+
+        actionController.addAction(UIAlertAction(title: "动漫", style: .Default, handler: { (action) -> Void in
+            self.titleButton.setTitle("动漫 ▾", forState: .Normal)
+        }))
+
+        actionController.addAction(UIAlertAction(title: "综艺", style: .Default, handler: { (action) -> Void in
+            self.titleButton.setTitle("综艺 ▾", forState: .Normal)
+        }))
+
+        actionController.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: { (action) -> Void in
+
+        }))
+
+        presentViewController(actionController, animated: true, completion: nil)
     }
     
     func setupBackgroundEffect(url: String) {
@@ -151,41 +175,48 @@ class MovieListCollectionViewController: UICollectionViewController {
             self.setupBackgroundEffect(items[0].thumb)
         }
     }
-
+    
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         let flowLayout = collectionView?.collectionViewLayout
         flowLayout?.invalidateLayout()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let dvc = segue.destinationViewController as? DetailCollectionViewController {
-            if let cell = sender as? UICollectionViewCell {
-                if let indexPath = collectionView?.indexPathForCell(cell) {
-                    dvc.detailApi = items[indexPath.row].detail
-                }
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var items = [YouPlayItem]()
+    var itemIndex = 1
+    
+    func requestMoreData() {
+        queryItems(itemIndex) { (items, succ) -> Void in
+            guard succ else { return }
+            self.itemIndex += 1
+            self.items.appendContentsOf(items)
+            self.collectionView?.reloadData()
+            if items.count > 0 && self.itemIndex == 2 {
+                self.setupBackgroundEffect(items[0].thumb)
             }
         }
+
     }
-    
-    
-    // MARK: UICollectionViewDataSource
-    var items = [YouPlayItem]()
-    
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
-
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
-
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieListCollectionCell", forIndexPath: indexPath) as! MovieItemCollectionViewCell
+        if indexPath.row == items.count - 1 {
+            requestMoreData()
+        }
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         if let c = cell as? MovieItemCollectionViewCell {
             let item = items[indexPath.row]
             c.thumbImage.setImageWithUrlString(item.thumb) { (image) -> Void in
@@ -197,15 +228,13 @@ class MovieListCollectionViewController: UICollectionViewController {
             }
             c.nameLabel.text = item.title
             c.statusLabel.text = item.status
-            c.rationgLabel.text = "评分：\(item.rating)"
+            c.rationgLabel.text = "评分: \(item.rating)"
         }
-        
     }
-    
-    
+
     struct CellRatio {
-        static let x = CGFloat(200)
-        static let y = CGFloat(100)
+        static let x = CGFloat(250)
+        static let y = CGFloat(125)
     }
     
     let mininumInteritemSpacing = CGFloat(8)
@@ -225,7 +254,7 @@ class MovieListCollectionViewController: UICollectionViewController {
         let n = calculateCellNum(bounds.size)
         return width/CGFloat(n) - mininumInteritemSpacing
     }
-
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = collectionCellWidth
         return CGSizeMake(width, width*CellRatio.y/CellRatio.x)
@@ -238,6 +267,15 @@ class MovieListCollectionViewController: UICollectionViewController {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return collectionViewEdgeInset
     }
-    
-    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }

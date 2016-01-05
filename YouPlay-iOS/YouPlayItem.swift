@@ -41,15 +41,15 @@ struct YouPlayDetail {
     var sources = [YouPlaySource]()
 }
 
-func queryItems(page: Int, complete: (items: [YouPlayItem]) -> Void) {
+func queryItems(page: Int, complete: ([YouPlayItem], Bool) -> Void) {
     Alamofire.request(.GET, "\(api)/channel/teleplaylist?page=\(page)").responseJSON { (data) -> Void in
         guard data.result.isSuccess && data.data != nil else {
-            complete(items: [])
+            complete([], false)
             return
         }
         let json = JSON(data: data.data!)
         guard json["err"].int == 0 else {
-            complete(items: [])
+            complete([], false)
             return
         }
         var l: [YouPlayItem] = []
@@ -67,7 +67,7 @@ func queryItems(page: Int, complete: (items: [YouPlayItem]) -> Void) {
                 actors: actors
                 ))
         }
-        complete(items: l)
+        complete(l, true)
     }
 }
 

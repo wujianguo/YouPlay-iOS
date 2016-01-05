@@ -12,7 +12,6 @@
 		812E2AD61C37893F0007F852 /* YouPlay_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 812E2AD41C37893F0007F852 /* YouPlay_iOS.xcdatamodeld */; };
 		812E2AD81C37893F0007F852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 812E2AD71C37893F0007F852 /* Assets.xcassets */; };
 		812E2ADB1C37893F0007F852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 812E2AD91C37893F0007F852 /* LaunchScreen.storyboard */; };
-		8154760E1C3A79B30075706E /* MovieListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8154760D1C3A79B30075706E /* MovieListCollectionViewController.swift */; };
 		815476431C3A83380075706E /* YouPlayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815476421C3A83380075706E /* YouPlayItem.swift */; };
 		815476441C3A845F0075706E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8154761A1C3A7E140075706E /* Alamofire.framework */; };
 		815476451C3A845F0075706E /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8154761A1C3A7E140075706E /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -24,6 +23,8 @@
 		815476811C3BB58E0075706E /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 8154767F1C3BB58E0075706E /* UIImage+ImageEffects.m */; };
 		8154768A1C3BBD9C0075706E /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815476891C3BBD9C0075706E /* Util.swift */; };
 		8154768C1C3BDD2D0075706E /* DetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8154768B1C3BDD2D0075706E /* DetailCollectionViewController.swift */; };
+		8167FBDA1C3C0148005F929B /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167FBD91C3C0148005F929B /* MovieListViewController.swift */; };
+		8167FBE51C3C16CE005F929B /* PhotoOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167FBE41C3C16CE005F929B /* PhotoOperations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,7 +144,6 @@
 		812E2AD71C37893F0007F852 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		812E2ADA1C37893F0007F852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		812E2ADC1C37893F0007F852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8154760D1C3A79B30075706E /* MovieListCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewController.swift; sourceTree = "<group>"; };
 		8154760F1C3A7E140075706E /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = SOURCE_ROOT; };
 		815476421C3A83380075706E /* YouPlayItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouPlayItem.swift; sourceTree = "<group>"; };
 		8154765E1C3B9CB80075706E /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -156,6 +156,8 @@
 		815476881C3BB61E0075706E /* YouPlay-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YouPlay-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		815476891C3BBD9C0075706E /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		8154768B1C3BDD2D0075706E /* DetailCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewController.swift; sourceTree = "<group>"; };
+		8167FBD91C3C0148005F929B /* MovieListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
+		8167FBE41C3C16CE005F929B /* PhotoOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoOperations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,10 +218,11 @@
 				8154765E1C3B9CB80075706E /* SwiftyJSON.swift */,
 				8154765F1C3B9CB80075706E /* XCGLogger.swift */,
 				812E2ACD1C37893F0007F852 /* AppDelegate.swift */,
-				8154760D1C3A79B30075706E /* MovieListCollectionViewController.swift */,
 				815476421C3A83380075706E /* YouPlayItem.swift */,
 				815476891C3BBD9C0075706E /* Util.swift */,
 				8154768B1C3BDD2D0075706E /* DetailCollectionViewController.swift */,
+				8167FBD91C3C0148005F929B /* MovieListViewController.swift */,
+				8167FBE41C3C16CE005F929B /* PhotoOperations.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -437,10 +440,11 @@
 				815476811C3BB58E0075706E /* UIImage+ImageEffects.m in Sources */,
 				8154768C1C3BDD2D0075706E /* DetailCollectionViewController.swift in Sources */,
 				8154768A1C3BBD9C0075706E /* Util.swift in Sources */,
-				8154760E1C3A79B30075706E /* MovieListCollectionViewController.swift in Sources */,
+				8167FBE51C3C16CE005F929B /* PhotoOperations.swift in Sources */,
 				815476801C3BB58E0075706E /* UIImage+BlurredFrame.m in Sources */,
 				815476431C3A83380075706E /* YouPlayItem.swift in Sources */,
 				815476611C3B9CB90075706E /* XCGLogger.swift in Sources */,
+				8167FBDA1C3C0148005F929B /* MovieListViewController.swift in Sources */,
 				812E2ACE1C37893F0007F852 /* AppDelegate.swift in Sources */,
 				815476601C3B9CB90075706E /* SwiftyJSON.swift in Sources */,
 				812E2AD61C37893F0007F852 /* YouPlay_iOS.xcdatamodeld in Sources */,
