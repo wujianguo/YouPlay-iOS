@@ -41,8 +41,22 @@ struct YouPlayDetail {
     var sources = [YouPlaySource]()
 }
 
-func queryItems(page: Int, complete: ([YouPlayItem], Bool) -> Void) {
-    Alamofire.request(.GET, "\(api)/channel/teleplaylist?page=\(page)").responseJSON { (data) -> Void in
+enum YouPlaychannel: CustomStringConvertible {
+    case Teleplay
+    case Anime
+    
+    var description: String {
+        switch self {
+        case .Teleplay:
+            return "teleplaylist"
+        case .Anime:
+            return "animelist"
+        }
+    }
+}
+
+func queryItems(channel: YouPlaychannel, page: Int, complete: ([YouPlayItem], Bool) -> Void) {
+    Alamofire.request(.GET, "\(api)/channel/\(channel)?page=\(page)").responseJSON { (data) -> Void in
         guard data.result.isSuccess && data.data != nil else {
             complete([], false)
             return

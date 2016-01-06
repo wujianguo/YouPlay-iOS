@@ -7,25 +7,252 @@
 //
 
 import UIKit
+import SnapKit
 
+class PlayRecord {
+    
+}
+
+@IBDesignable
+class PlayButton: UIButton {
+    
+    @IBInspectable
+    var themeColor: UIColor = UIColor.themeColor() { didSet { setNeedsDisplay() } }
+    
+    override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetFillColorWithColor(context, themeColor.CGColor)
+        CGContextAddEllipseInRect(context, rect)
+        CGContextFillPath(context)
+        
+        let radius = min(rect.height, rect.width) / 2 * 5 / 9
+        CGContextBeginPath(context)
+        CGContextMoveToPoint(context, rect.width / 2 - radius / 2, rect.height / 2 - radius * sqrt(3) / 2)
+        CGContextAddLineToPoint(context, rect.width / 2 - radius / 2, rect.height / 2 + radius * sqrt(3) / 2)
+        CGContextAddLineToPoint(context, rect.width / 2 + radius, rect.height / 2)
+        CGContextClosePath(context)
+        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
+        CGContextFillPath(context);
+    }
+}
+
+class SourceButton: UIButton {
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        adjustsImageWhenHighlighted = false
+        imageView?.contentMode = .Center
+        titleLabel?.textAlignment = .Center
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
+        if let image = imageForState(.Normal) {
+            let imageW = image.size.width
+            let imageH = image.size.height
+            let imageX = contentRect.size.width - imageW - 10
+            let imageY = (contentRect.size.height - imageH) / 2
+            return CGRectMake(imageX, imageY, imageW, imageH)
+        }
+        return super.imageRectForContentRect(contentRect)
+    }
+    
+    override func titleRectForContentRect(contentRect: CGRect) -> CGRect {
+        if let _ = imageForState(.Normal) {
+            let titleW = contentRect.size.width - 12 - 12;
+            let titleH = self.frame.size.height;
+            return CGRectMake(12, 0, titleW, titleH);
+        }
+        return super.titleRectForContentRect(contentRect)
+    }
+}
+
+
+class DetailCollectionHeaderCell: UICollectionReusableView {
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupPlayButton()
+        setupSourceButton()
+        setup()
+    }
+    
+    var thumbImage = UIImageView()
+    var nameLabel = UILabel()
+    var statusLabel = UILabel()
+    var rationgLabel = UILabel()
+//    var actors = UILabel()
+    var year = UILabel()
+
+    func setup() {
+        
+        nameLabel.textColor = UIColor.whiteColor()
+        statusLabel.textColor = UIColor.whiteColor()
+        rationgLabel.textColor = UIColor.whiteColor()
+//        actors.textColor = UIColor.whiteColor()
+        year.textColor = UIColor.whiteColor()
+        
+        nameLabel.font = UIFont.systemFontOfSize(15)
+        statusLabel.font = UIFont.systemFontOfSize(12)
+        rationgLabel.font = UIFont.systemFontOfSize(12)
+//        actors.font = UIFont.systemFontOfSize(12)
+        year.font = UIFont.systemFontOfSize(12)
+        
+        nameLabel.numberOfLines = 0
+        
+        addSubview(thumbImage)
+        addSubview(nameLabel)
+        addSubview(statusLabel)
+        addSubview(rationgLabel)
+//        addSubview(actors)
+        addSubview(year)
+        
+        thumbImage.snp_makeConstraints { (make) -> Void in
+            make.top.left.equalTo(8)
+            make.bottom.equalTo(-8)
+            make.width.equalTo(thumbImage.snp_height).multipliedBy(1.0/1.5)
+        }
+        
+        playButton.snp_makeConstraints { (make) -> Void in
+            make.bottom.equalTo(thumbImage.snp_bottom)
+            make.left.equalTo(thumbImage.snp_right).offset(18)
+            make.width.equalTo(32)
+            make.height.equalTo(playButton.snp_width)
+        }
+        
+        sourceButton.snp_makeConstraints { (make) -> Void in
+            make.bottom.equalTo(playButton.snp_bottom)
+            make.left.equalTo(playButton.snp_right).offset(35)
+            make.width.equalTo(80)
+            make.height.equalTo(playButton)
+        }
+        
+        nameLabel.snp_makeConstraints { (make) -> Void in
+            make.left.equalTo(thumbImage.snp_right).offset(18)
+            make.top.equalTo(thumbImage).offset(8)
+            make.right.equalTo(self).offset(-8)
+        }
+        
+        rationgLabel.snp_makeConstraints { (make) -> Void in
+            make.left.right.equalTo(nameLabel)
+            make.bottom.equalTo(playButton.snp_top).offset(-12)
+        }
+        
+        year.snp_makeConstraints { (make) -> Void in
+            make.left.right.equalTo(nameLabel)
+            make.bottom.lessThanOrEqualTo(rationgLabel.snp_top).offset(-12)
+        }
+        
+        statusLabel.snp_makeConstraints { (make) -> Void in
+            make.left.right.equalTo(nameLabel)
+            make.bottom.lessThanOrEqualTo(year.snp_top).offset(-12)
+        }
+    }
+    
+    var sourceButton = SourceButton(frame: CGRectZero)
+    var playButton = PlayButton(frame: CGRectZero)
+    
+    func setupPlayButton() {
+        addSubview(playButton)
+        
+        playButton.addTarget(self, action: "playButtonClick:", forControlEvents: .TouchUpInside)
+    }
+    
+    func playButtonClick(sender: UIButton) {
+
+    }
+
+
+    func setupSourceButton() {
+        addSubview(sourceButton)
+        sourceButton.setImage(UIImage(named: "triangle"), forState: .Normal)
+        sourceButton.layer.masksToBounds = true
+        sourceButton.layer.borderWidth = 1
+        sourceButton.layer.cornerRadius = 16
+        sourceButton.layer.borderColor = UIColor.themeColor().CGColor
+        sourceButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        sourceButton.backgroundColor = UIColor.themeColor()
+        sourceButton.tintColor = UIColor.whiteColor()
+        
+        sourceButton.addTarget(self, action: "sourceButtonClick:", forControlEvents: .TouchUpInside)
+    }
+    
+    func sourceButtonClick(sender: UIButton) {
+
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if let image = thumbImage.image {
+            let b = bounds
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+                let color = image.darkEffectColor(b)
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                    self.backgroundColor = color
+                }
+            }
+        }
+        
+    }
+
+}
 
 class DetailItemCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setup()
     }
     
+    var titleLabel = UILabel()
+    func setup() {
+        contentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        titleLabel.textAlignment = .Center
+        contentView.addSubview(titleLabel)
+        titleLabel.snp_makeConstraints { (make) -> Void in
+            make.edges.equalTo(contentView)
+        }
+    }
+    
+    /*
+    override var selected: Bool {
+        didSet {
+            if selected {
+                contentView.backgroundColor = UIColor.themeColor()
+//                titleLabel.textColor = UIColor.whiteColor()
+                titleLabel.textColor = UIColor(rgb: 0x666666)
+            } else {
+                contentView.backgroundColor = UIColor.whiteColor()
+                titleLabel.textColor = UIColor(rgb: 0x666666)
+            }
+        }
+    }
+    */
 }
 
 class DetailCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = UIColor.whiteColor()
         queryDetail(detailApi) { (d) -> Void in
             self.detail = d
             self.collectionView?.reloadData()
         }
+    }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.setBackgroundLightEffect(thumb)
     }
 
 
@@ -33,6 +260,17 @@ class DetailCollectionViewController: UICollectionViewController {
 
     var detailApi = ""
     var detail: YouPlayDetail?
+    var playRecord: PlayRecord?
+    var thumb = "" {
+        didSet {
+            view.setBackgroundLightEffect(thumb)
+            collectionView?.backgroundColor = UIColor.clearColor()
+        }
+    }
+    var status = ""
+    var name = ""
+    var rating = ""
+    
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -49,39 +287,35 @@ class DetailCollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DetailItemCollectionCell", forIndexPath: indexPath)
-        cell.backgroundColor = UIColor.redColor()
+        return cell
+    }
+    
+    override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        let c = cell as! DetailItemCollectionViewCell
+        if playRecord != nil {
+            
+        } else {
+            let source = detail!.sources[0]
+            c.titleLabel.text = source.titles[indexPath.row]
+        }
+    }
+    
+    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let cell = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "DetailHeaderCell", forIndexPath: indexPath) as! DetailCollectionHeaderCell
+        UIImageView.requestImageWithUrlString(thumb) { (image) -> Void in
+            cell.thumbImage.image = image
+            cell.setBackgroundDarkEffect(self.thumb)
+        }
+        cell.statusLabel.text = status
+        cell.nameLabel.text = name
+        cell.rationgLabel.text = "评分: \(rating)"
+        if let d = detail {
+            cell.year.text = "年份: \(d.pub)"
+        } else {
+            cell.year.text = "年份: "
+        }
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
 
 }

@@ -8,43 +8,38 @@
 
 import UIKit
 
-// This enum contains all the possible states a photo record can be in
-enum PhotoRecordState {
-    case New, Downloaded, Filtered, Failed
+
+class PendingOperations {
+    lazy var downloadsInProgress = [NSIndexPath: NSOperation]()
+    lazy var downloadQueue: NSOperationQueue = {
+        var queue = NSOperationQueue()
+        queue.name = "Download queue"
+//        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+    
+    lazy var filtrationsInProgress = [NSIndexPath: NSOperation]()
+    lazy var filtrationQueue: NSOperationQueue = {
+        var queue = NSOperationQueue()
+        queue.name = "Image Filtration queue"
+//        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
 }
 
 class PhotoRecord {
-    let name:String
-    let url:NSURL
-    var state = PhotoRecordState.New
-    var originImage = UIImage()
-    var filteredImage = UIImage()
-    
-    init(name:String, url:NSURL) {
-        self.name = name
+    let url: NSURL
+    let bounds: CGRect
+    var image: UIImage?
+    var color: UIColor?
+    init(bounds: CGRect, url: NSURL) {
+        self.bounds = bounds
         self.url = url
     }
 }
 
-class PendingOperations {
-    lazy var downloadsInProgress = [NSIndexPath:NSOperation]()
-    lazy var downloadQueue:NSOperationQueue = {
-        var queue = NSOperationQueue()
-        queue.name = "Download queue"
-        queue.maxConcurrentOperationCount = 1
-        return queue
-    }()
-    
-    lazy var filtrationsInProgress = [NSIndexPath:NSOperation]()
-    lazy var filtrationQueue:NSOperationQueue = {
-        var queue = NSOperationQueue()
-        queue.name = "Image Filtration queue"
-        queue.maxConcurrentOperationCount = 1
-        return queue
-    }()
-}
-
 class ImageDownloader: NSOperation {
+
     let photoRecord: PhotoRecord
     
     init(photoRecord: PhotoRecord) {
@@ -52,22 +47,35 @@ class ImageDownloader: NSOperation {
     }
     
     override func main() {
-        if self.cancelled {
+        guard !cancelled else { return }
+
+        if let img = Util.imageCache.objectForKey(photoRecord.url) as? UIImage {
+            photoRecord.image = img
             return
         }
-        let imageData = NSData(contentsOfURL:self.photoRecord.url)
-        
-        if self.cancelled {
-            return
-        }
-        
-        if imageData?.length > 0 {
-            self.photoRecord.originImage = UIImage(data:imageData!)
-            self.photoRecord.state = .Downloaded
-        }
-        else
-        {
-            self.photoRecord.state = .Failed
+        let imageData = NSData(contentsOfURL: photoRecord.url)
+        guard !cancelled && imageData?.length > 0 else { return }
+        if let img = UIImage(data: imageData!) {
+            Util.imageCache.setObject(img, forKey: photoRecord.url)
+            photoRecord.image = img
         }
     }
 }
+
+class ImageFiltration: NSOperation {
+
+    let photoRecord: PhotoRecord
+
+    init(photoRecord: PhotoRecord) {
+        self.photoRecord = photoRecord
+    }
+    
+    override func main () {
+        guard !cancelled else { return }
+        
+        if let image = photoRecord.image {
+            photoRecord.color = image.darkEffectColor(photoRecord.bounds)
+        }
+    }
+}
+

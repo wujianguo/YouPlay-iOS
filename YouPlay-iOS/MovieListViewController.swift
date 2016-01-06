@@ -10,37 +10,6 @@ import UIKit
 import SnapKit
 
 
-extension UIView {
-    func setBackgroundLightEffect(image: UIImage) {
-        let img = lightEffectImage(image)
-        backgroundColor = UIColor(patternImage: img)
-    }
-    
-    func setBackgroundDarkEffect(image: UIImage) {
-        let img = darkEffectImage(image)
-        backgroundColor = UIColor(patternImage: img)
-    }
-    
-    func lightEffectImage(image: UIImage) -> UIImage {
-        var img = image.applyLightEffectAtFrame(CGRectMake(0, 0, image.size.width, image.size.height))
-        UIGraphicsBeginImageContext(self.frame.size);
-        img.drawInRect(self.bounds)
-        img = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return img
-    }
-    
-    func darkEffectImage(image: UIImage) -> UIImage {
-        var img = image.applyDarkEffectAtFrame(CGRectMake(0, 0, image.size.width, image.size.height))
-        UIGraphicsBeginImageContext(self.frame.size);
-        img.drawInRect(self.bounds)
-        img = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return img
-    }
-    
-}
-
 class MovieItemCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
@@ -103,24 +72,51 @@ class MovieItemCollectionViewCell: UICollectionViewCell {
             make.left.right.equalTo(nameLabel)
             make.bottom.lessThanOrEqualTo(actors.snp_top).offset(-12)
         }
-    }
-    
-    func setupBackgroundEffect() {
-        if let image = thumbImage.image {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
-                let color = UIColor(patternImage: self.contentView.darkEffectImage(image))
-                dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                    self.contentView.backgroundColor = color
-                }
-            }
-        }
+        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setupBackgroundEffect()
+        setupThumbImage(photoRecord?.url)
     }
     
+    func setupThumbImage(url: NSURL?) {
+        guard url != nil else { return }
+        photoRecord = PhotoRecord(bounds: bounds, url: url!)
+        downloadOperation?.cancel()
+        let downOp = ImageDownloader(photoRecord: photoRecord!)
+        downloadOperation = downOp
+        downOp.completionBlock = {
+            if downOp.cancelled {
+                return
+            }
+            dispatch_async(dispatch_get_main_queue()) { [weak self] () -> Void in
+                self?.thumbImage.image = self?.downloadOperation?.photoRecord.image
+            }
+        }
+        MovieItemCollectionViewCell.pendingOperations.downloadQueue.addOperation(downOp)
+        
+        filterOperation?.cancel()
+        let filterOp = ImageFiltration(photoRecord: photoRecord!)
+        filterOperation = filterOp
+        filterOp.completionBlock = {
+            if filterOp.cancelled {
+                return
+            }
+            dispatch_async(dispatch_get_main_queue()) { [weak self] () -> Void in
+                self?.contentView.backgroundColor = self?.filterOperation?.photoRecord.color
+            }
+        }
+        filterOp.addDependency(downOp)
+        MovieItemCollectionViewCell.pendingOperations.filtrationQueue.addOperation(filterOp)
+    }
+    
+    
+    var photoRecord: PhotoRecord?
+    var downloadOperation: ImageDownloader?
+    var filterOperation: ImageFiltration?
+    
+    static let pendingOperations = PendingOperations()
 }
 
 class MovieListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -128,6 +124,9 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationController?.navigationBar.tintColor = UIColor.themeColor()
+        titleButton.setTitleColor(UIColor.themeColor(), forState: .Normal)
         titleButton.setTitle("电视剧 ▾", forState: .Normal)
         titleButton.addTarget(self, action: "titleButtonClick", forControlEvents: .TouchUpInside)
         navigationItem.titleView = titleButton
@@ -141,19 +140,29 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     let titleButton = UIButton()
     
+    func channelChangedTo(channel: YouPlaychannel) {
+        self.channel = channel
+        items.removeAll()
+        itemIndex = 1
+        collectionView.reloadData()
+        requestMoreData()
+    }
+    
     func titleButtonClick() {
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         actionController.addAction(UIAlertAction(title: "电视剧", style: .Default, handler: { (action) -> Void in
             self.titleButton.setTitle("电视剧 ▾", forState: .Normal)
+            self.channelChangedTo(.Teleplay)
         }))
 
         actionController.addAction(UIAlertAction(title: "动漫", style: .Default, handler: { (action) -> Void in
             self.titleButton.setTitle("动漫 ▾", forState: .Normal)
+            self.channelChangedTo(.Anime)
         }))
 
-        actionController.addAction(UIAlertAction(title: "综艺", style: .Default, handler: { (action) -> Void in
-            self.titleButton.setTitle("综艺 ▾", forState: .Normal)
-        }))
+//        actionController.addAction(UIAlertAction(title: "综艺", style: .Default, handler: { (action) -> Void in
+//            self.titleButton.setTitle("综艺 ▾", forState: .Normal)
+//        }))
 
         actionController.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: { (action) -> Void in
 
@@ -163,10 +172,7 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func setupBackgroundEffect(url: String) {
-        UIImageView.requestImageWithUrlString(url) { (image) -> Void in
-            self.view.setBackgroundLightEffect(image)
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        }
+        view.setBackgroundLightEffect(url)
     }
     
     override func viewDidLayoutSubviews() {
@@ -186,9 +192,13 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var items = [YouPlayItem]()
     var itemIndex = 1
+    var thumbs = [PhotoRecord]()
+    let pendingOperations = PendingOperations()
+    
+    var channel = YouPlaychannel.Teleplay
     
     func requestMoreData() {
-        queryItems(itemIndex) { (items, succ) -> Void in
+        queryItems(channel, page: itemIndex) { (items, succ) -> Void in
             guard succ else { return }
             self.itemIndex += 1
             self.items.appendContentsOf(items)
@@ -219,9 +229,10 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         if let c = cell as? MovieItemCollectionViewCell {
             let item = items[indexPath.row]
-            c.thumbImage.setImageWithUrlString(item.thumb) { (image) -> Void in
-                c.setupBackgroundEffect()
+            if let url = NSURL(string: item.thumb) {
+                c.setupThumbImage(url)
             }
+
             c.actors.text = ""
             for a in item.actors {
                 c.actors.text! += "\(a) "
@@ -268,14 +279,23 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
         return collectionViewEdgeInset
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let dvc = segue.destinationViewController as? DetailCollectionViewController, let cell = sender as? UICollectionViewCell {
+            if let indexPath = collectionView.indexPathForCell(cell) {
+                let item = items[indexPath.row]
+                dvc.detailApi = item.detail
+                dvc.thumb = item.thumb
+                dvc.status = item.status
+                dvc.name = item.title
+                dvc.rating = item.rating
+            }
+            
+        }
     }
-    */
+    
 
 }
