@@ -14,17 +14,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Py9-D0-C4R">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="40" height="30"/>
                             <size key="headerReferenceSize" width="50" height="207"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="8"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DetailItemCollectionCell" id="YeG-kx-465" customClass="DetailItemCollectionViewCell" customModule="YouPlay_iOS" customModuleProvider="target">
-                                <rect key="frame" x="8" y="279" width="50" height="50"/>
+                                <rect key="frame" x="8" y="279" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
@@ -111,7 +111,9 @@
                             <constraint firstItem="sKP-h2-IzP" firstAttribute="bottom" secondItem="aT1-hg-XLT" secondAttribute="top" id="nuE-nb-8Jf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="xwe-mH-Irj"/>
+                    <navigationItem key="navigationItem" id="xwe-mH-Irj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="777-06-ctC"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="sKP-h2-IzP" id="OZb-ea-kgU"/>
                     </connections>

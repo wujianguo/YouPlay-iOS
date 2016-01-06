@@ -85,6 +85,8 @@ class DetailCollectionHeaderCell: UICollectionReusableView {
         setup()
     }
     
+    weak var delegate: DetailCollectionHeaderDelegate?
+
     var thumbImage = UIImageView()
     var nameLabel = UILabel()
     var statusLabel = UILabel()
@@ -168,7 +170,7 @@ class DetailCollectionHeaderCell: UICollectionReusableView {
     }
     
     func playButtonClick(sender: UIButton) {
-
+        delegate?.detailHeaderPlayButtonClick()
     }
 
 
@@ -182,12 +184,14 @@ class DetailCollectionHeaderCell: UICollectionReusableView {
         sourceButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         sourceButton.backgroundColor = UIColor.themeColor()
         sourceButton.tintColor = UIColor.whiteColor()
+        sourceButton.titleLabel?.font = UIFont.systemFontOfSize(12)
+        sourceButton.titleLabel?.textAlignment = .Center
         
         sourceButton.addTarget(self, action: "sourceButtonClick:", forControlEvents: .TouchUpInside)
     }
     
     func sourceButtonClick(sender: UIButton) {
-
+        delegate?.detailHeaderSourceButtonClick()
     }
     
     override func layoutSubviews() {
@@ -207,6 +211,13 @@ class DetailCollectionHeaderCell: UICollectionReusableView {
 
 }
 
+
+protocol DetailCollectionHeaderDelegate: class {
+    func detailHeaderSourceButtonClick()
+    func detailHeaderPlayButtonClick()
+}
+
+
 class DetailItemCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
@@ -216,31 +227,32 @@ class DetailItemCollectionViewCell: UICollectionViewCell {
     
     var titleLabel = UILabel()
     func setup() {
-        contentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        contentView.backgroundColor = UIColor.themeColor()
         titleLabel.textAlignment = .Center
+//        titleLabel.textColor = UIColor(rgb: 0x666666)
         contentView.addSubview(titleLabel)
         titleLabel.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(contentView)
         }
     }
     
-    /*
+    var thumb = ""
+    
     override var selected: Bool {
         didSet {
             if selected {
-                contentView.backgroundColor = UIColor.themeColor()
-//                titleLabel.textColor = UIColor.whiteColor()
-                titleLabel.textColor = UIColor(rgb: 0x666666)
+                contentView.setBackgroundDarkEffect(thumb)
+                titleLabel.textColor = UIColor.whiteColor()
             } else {
-                contentView.backgroundColor = UIColor.whiteColor()
-                titleLabel.textColor = UIColor(rgb: 0x666666)
+                contentView.backgroundColor = UIColor.themeColor()
+                titleLabel.textColor = UIColor.blackColor()
             }
         }
     }
-    */
+    
 }
 
-class DetailCollectionViewController: UICollectionViewController {
+class DetailCollectionViewController: UICollectionViewController, DetailCollectionHeaderDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -255,10 +267,17 @@ class DetailCollectionViewController: UICollectionViewController {
         super.viewDidLayoutSubviews()
         view.setBackgroundLightEffect(thumb)
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView?.reloadData()
+    }
 
 
     // MARK: UICollectionViewDataSource
 
+    var curSource = 0
+    var curIndex = 0
     var detailApi = ""
     var detail: YouPlayDetail?
     var playRecord: PlayRecord?
@@ -299,6 +318,10 @@ class DetailCollectionViewController: UICollectionViewController {
             let source = detail!.sources[0]
             c.titleLabel.text = source.titles[indexPath.row]
         }
+        c.thumb = thumb
+        if indexPath.row == curIndex {
+            cell.selected = true
+        }
     }
     
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -312,11 +335,44 @@ class DetailCollectionViewController: UICollectionViewController {
         cell.rationgLabel.text = "评分: \(rating)"
         if let d = detail {
             cell.year.text = "年份: \(d.pub)"
+            if d.sources.count > 1 {
+                cell.sourceButton.setTitle(d.sources[curSource].name, forState: .Normal)
+                cell.sourceButton.setImage(UIImage(named: "triangle"), forState: .Normal)
+                cell.sourceButton.enabled = true
+            } else if d.sources.count == 1 {
+                cell.sourceButton.setTitle(d.sources[0].name, forState: .Normal)
+                cell.sourceButton.setImage(nil, forState: .Normal)
+                cell.sourceButton.enabled = false
+            } else {
+                cell.playButton.hidden = true
+                cell.sourceButton.hidden = true
+            }
         } else {
             cell.year.text = "年份: "
         }
+        cell.delegate = self
         return cell
     }
 
+    func detailHeaderSourceButtonClick() {
+        let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        for index in 0..<detail!.sources.count {
+            actionController.addAction(UIAlertAction(title: detail!.sources[index].name, style: .Default, handler: { (action) -> Void in
+                self.curSource = index
+                self.collectionView?.reloadData()
+            }))
+        }
+        
+        actionController.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: { (action) -> Void in
+            
+        }))
+        
+        presentViewController(actionController, animated: true, completion: nil)
+
+    }
+    
+    func detailHeaderPlayButtonClick() {
+        
+    }
 
 }

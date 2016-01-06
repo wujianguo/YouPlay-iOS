@@ -200,9 +200,15 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
     func requestMoreData() {
         queryItems(channel, page: itemIndex) { (items, succ) -> Void in
             guard succ else { return }
+            
+            var indexPaths = [NSIndexPath]()
+            for i in 0..<items.count {
+                indexPaths.append(NSIndexPath(forRow: self.items.count + i, inSection: 0))
+            }
             self.itemIndex += 1
             self.items.appendContentsOf(items)
-            self.collectionView?.reloadData()
+//            self.collectionView?.reloadData()
+            self.collectionView.insertItemsAtIndexPaths(indexPaths)
             if items.count > 0 && self.itemIndex == 2 {
                 self.setupBackgroundEffect(items[0].thumb)
             }
