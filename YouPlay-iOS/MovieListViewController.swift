@@ -125,8 +125,8 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidLoad()
 
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        navigationController?.navigationBar.tintColor = UIColor.themeColor()
-        titleButton.setTitleColor(UIColor.themeColor(), forState: .Normal)
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        titleButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         titleButton.setTitle("电视剧 ▾", forState: .Normal)
         titleButton.addTarget(self, action: "titleButtonClick", forControlEvents: .TouchUpInside)
         navigationItem.titleView = titleButton

@@ -139,6 +139,7 @@ class DetailCollectionHeaderCell: UICollectionReusableView {
             make.left.equalTo(thumbImage.snp_right).offset(18)
             make.top.equalTo(thumbImage).offset(8)
             make.right.equalTo(self).offset(-8)
+            make.height.greaterThanOrEqualTo(50)
         }
         
         rationgLabel.snp_makeConstraints { (make) -> Void in

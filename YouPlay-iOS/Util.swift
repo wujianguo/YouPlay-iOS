@@ -15,7 +15,7 @@ class Util {
 
 extension UIColor {
     
-    class func themeColor() -> UIColor { return UIColor.whiteColor() }
+    class func themeColor() -> UIColor { return UIColor.whiteColor().colorWithAlphaComponent(0.5) }
 
     /**
      * Initializes and returns a color object for the given RGB hex integer.
