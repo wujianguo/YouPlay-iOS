@@ -25,6 +25,7 @@
 		8154768C1C3BDD2D0075706E /* DetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8154768B1C3BDD2D0075706E /* DetailCollectionViewController.swift */; };
 		8167FBDA1C3C0148005F929B /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167FBD91C3C0148005F929B /* MovieListViewController.swift */; };
 		8167FBE51C3C16CE005F929B /* PhotoOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167FBE41C3C16CE005F929B /* PhotoOperations.swift */; };
+		816C74B91C427905006A1E34 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816C74B81C427905006A1E34 /* PlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +159,7 @@
 		8154768B1C3BDD2D0075706E /* DetailCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewController.swift; sourceTree = "<group>"; };
 		8167FBD91C3C0148005F929B /* MovieListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
 		8167FBE41C3C16CE005F929B /* PhotoOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoOperations.swift; sourceTree = "<group>"; };
+		816C74B81C427905006A1E34 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 				8154768B1C3BDD2D0075706E /* DetailCollectionViewController.swift */,
 				8167FBD91C3C0148005F929B /* MovieListViewController.swift */,
 				8167FBE41C3C16CE005F929B /* PhotoOperations.swift */,
+				816C74B81C427905006A1E34 /* PlayerViewController.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				8154768A1C3BBD9C0075706E /* Util.swift in Sources */,
 				8167FBE51C3C16CE005F929B /* PhotoOperations.swift in Sources */,
 				815476801C3BB58E0075706E /* UIImage+BlurredFrame.m in Sources */,
+				816C74B91C427905006A1E34 /* PlayerViewController.swift in Sources */,
 				815476431C3A83380075706E /* YouPlayItem.swift in Sources */,
 				815476611C3B9CB90075706E /* XCGLogger.swift in Sources */,
 				8167FBDA1C3C0148005F929B /* MovieListViewController.swift in Sources */,

@@ -126,10 +126,6 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
 
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        titleButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        titleButton.setTitle("电视剧 ▾", forState: .Normal)
-        titleButton.addTarget(self, action: "titleButtonClick", forControlEvents: .TouchUpInside)
-        navigationItem.titleView = titleButton
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -146,29 +142,6 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
         itemIndex = 1
         collectionView.reloadData()
         requestMoreData()
-    }
-    
-    func titleButtonClick() {
-        let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        actionController.addAction(UIAlertAction(title: "电视剧", style: .Default, handler: { (action) -> Void in
-            self.titleButton.setTitle("电视剧 ▾", forState: .Normal)
-            self.channelChangedTo(.Teleplay)
-        }))
-
-        actionController.addAction(UIAlertAction(title: "动漫", style: .Default, handler: { (action) -> Void in
-            self.titleButton.setTitle("动漫 ▾", forState: .Normal)
-            self.channelChangedTo(.Anime)
-        }))
-
-//        actionController.addAction(UIAlertAction(title: "综艺", style: .Default, handler: { (action) -> Void in
-//            self.titleButton.setTitle("综艺 ▾", forState: .Normal)
-//        }))
-
-        actionController.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: { (action) -> Void in
-
-        }))
-
-        presentViewController(actionController, animated: true, completion: nil)
     }
     
     func setupBackgroundEffect(url: String) {
@@ -190,6 +163,11 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBAction func segmentedControlValueChanged(sender: UISegmentedControl) {
+        channelChangedTo(YouPlaychannel(rawValue: sender.selectedSegmentIndex)!)
+    }
+
+    
     var items = [YouPlayItem]()
     var itemIndex = 1
     var thumbs = [PhotoRecord]()
@@ -198,9 +176,9 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
     var channel = YouPlaychannel.Teleplay
     
     func requestMoreData() {
+        let c = channel
         queryItems(channel, page: itemIndex) { (items, succ) -> Void in
-            guard succ else { return }
-            
+            guard succ && c == self.channel else { return }
             var indexPaths = [NSIndexPath]()
             for i in 0..<items.count {
                 indexPaths.append(NSIndexPath(forRow: self.items.count + i, inSection: 0))
@@ -212,6 +190,7 @@ class MovieListViewController: UIViewController, UICollectionViewDataSource, UIC
             if items.count > 0 && self.itemIndex == 2 {
                 self.setupBackgroundEffect(items[0].thumb)
             }
+            
         }
 
     }

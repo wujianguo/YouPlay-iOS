@@ -241,8 +241,19 @@ class DetailItemCollectionViewCell: UICollectionViewCell {
     override var selected: Bool {
         didSet {
             if selected {
-                contentView.setBackgroundDarkEffect(thumb)
-                titleLabel.textColor = UIColor.whiteColor()
+                let b = contentView.bounds
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+                    guard self.selected else { return }
+                    UIImageView.requestImageWithUrlString(self.thumb) { (image) -> Void in
+                        guard self.selected else { return }
+                        let color = image.darkEffectColor(b)
+                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                            guard self.selected else { return }
+                            self.contentView.backgroundColor = color
+                            self.titleLabel.textColor = UIColor.whiteColor()
+                        }
+                    }
+                }
             } else {
                 contentView.backgroundColor = UIColor.themeColor()
                 titleLabel.textColor = UIColor.blackColor()
@@ -330,6 +341,12 @@ class DetailCollectionViewController: UICollectionViewController, DetailCollecti
             cell.thumbImage.image = image
             cell.setBackgroundDarkEffect(self.thumb)
         }
+        updateHeaderUI(cell)
+        cell.delegate = self
+        return cell
+    }
+    
+    func updateHeaderUI(cell: DetailCollectionHeaderCell) {
         cell.statusLabel.text = status
         cell.nameLabel.text = name
         cell.rationgLabel.text = "评分: \(rating)"
@@ -350,16 +367,18 @@ class DetailCollectionViewController: UICollectionViewController, DetailCollecti
         } else {
             cell.year.text = "年份: "
         }
-        cell.delegate = self
-        return cell
     }
 
     func detailHeaderSourceButtonClick() {
+        guard detail != nil else { return }
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         for index in 0..<detail!.sources.count {
             actionController.addAction(UIAlertAction(title: detail!.sources[index].name, style: .Default, handler: { (action) -> Void in
                 self.curSource = index
-                self.collectionView?.reloadData()
+                if let cell = self.collectionView?.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as? DetailCollectionHeaderCell {
+                    self.updateHeaderUI(cell)
+                }
+                
             }))
         }
         

@@ -112,6 +112,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xwe-mH-Irj">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="qI3-aa-IpO">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="电视剧"/>
+                                <segment title="动漫"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentedControlValueChanged:" destination="dlV-L9-HPw" eventType="valueChanged" id="oYG-7b-4mA"/>
+                            </connections>
+                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="777-06-ctC"/>
                     </navigationItem>
                     <connections>

@@ -41,8 +41,8 @@ struct YouPlayDetail {
     var sources = [YouPlaySource]()
 }
 
-enum YouPlaychannel: CustomStringConvertible {
-    case Teleplay
+enum YouPlaychannel: Int, CustomStringConvertible {
+    case Teleplay = 0
     case Anime
     
     var description: String {
