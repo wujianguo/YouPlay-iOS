@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-private var api = "https://youplay.avosapps.com/api/v1"
+private var api = "https://youplay.leanapp.cn/api/v1"
 
 struct YouPlayItem {
     var status = ""
