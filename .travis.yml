@@ -1,6 +1,6 @@
 language: objective-c
 osx_image: xcode7.2
-script: xcodebuild -project YouPlay-iOSo.xcodeproj -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES
+script: xcodebuild -project YouPlay-iOS.xcodeproj -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES
 notifications:
   email: false
 
