@@ -9,4 +9,4 @@
 	url = https://github.com/SwiftyJSON/SwiftyJSON.git
 [submodule "SnapKit"]
 	path = SnapKit
-	url = git@github.com:SnapKit/SnapKit.git
+	url = https://github.com/SnapKit/SnapKit.git
