@@ -1,14 +1,9 @@
 language: objective-c
 osx_image: xcode7.2
 before_script:
-- echo $KEY_PASSWORD
-- echo $ENCRYPTION_SECRET
-- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/profile/wujianguoAdHoc.mobileprovision.enc
-  -d -a -out scripts/profile/wujianguoAdHoc.mobileprovision
-- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/certs/sanliaoDistribution.cer.enc
-  -out scripts/certs/sanliaoDistribution.cer
-- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/certs/sanliaoDistribution.p12.enc
-  -out scripts/certs/sanliaoDistribution.p12
+- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/profile/wujianguoAdHoc.mobileprovision.enc -d -a -out scripts/profile/wujianguoAdHoc.mobileprovision
+- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/certs/sanliaoDistribution.cer.enc -out scripts/certs/sanliaoDistribution.cer
+- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/certs/sanliaoDistribution.p12.enc -out scripts/certs/sanliaoDistribution.p12
 - ./scripts/add-key.sh
 script:
 - xctool -project YouPlay-iOS.xcodeproj -scheme YouPlay-iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES
