@@ -3,9 +3,12 @@ osx_image: xcode7.2
 before_script:
 - echo $KEY_PASSWORD
 - echo $ENCRYPTION_SECRET
-- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/profile/wujianguoAdHoc.mobileprovision.enc -d -a -out scripts/profile/wujianguoAdHoc.mobileprovision
-- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/certs/sanliaoDistribution.cer.enc -out scripts/certs/sanliaoDistribution.cer
-- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/certs/sanliaoDistribution.p12.enc -out scripts/certs/sanliaoDistribution.p12
+- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/profile/wujianguoAdHoc.mobileprovision.enc
+  -d -a -out scripts/profile/wujianguoAdHoc.mobileprovision
+- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/certs/sanliaoDistribution.cer.enc
+  -out scripts/certs/sanliaoDistribution.cer
+- openssl aes-256-cbc -k "$KEY_PASSWORD" -in scripts/certs/sanliaoDistribution.p12.enc
+  -out scripts/certs/sanliaoDistribution.p12
 - ./scripts/add-key.sh
 script:
 - xctool -project YouPlay-iOS.xcodeproj -scheme YouPlay-iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES
@@ -13,7 +16,6 @@ after_success:
 - ./scripts/archiv-and-deploy.sh
 after_script:
 - ./scripts/remove-key.sh
-
 notifications:
   email: false
 env:
@@ -23,3 +25,4 @@ env:
   - PROFILE_NAME = "wujianguoAdHoc.mobileprovision"
   - secure: Vtp9OcXHuP7dpQ60Uko1H8odxWOWpBC2dhHC07gj2Q72A+t0RFcbDwljq86vEaJZudyb9+7ZegUkOVKnbWykH8t9kr4BEs4W8e75iP/9ZW2gBhI9OpH77z9HZbhjDjrXNs73eKUm+RwMb79UWGKmoIwo5OmOB03cY/pVTf01FoL5ed3s3YzF4dLOhoHLY4iynA2l2l0zl4DVDWRqfyny4NgtK/dJL8FRAlEeRfyUfUBkE/XZ1t5Gd9Ul8VmIPYEJ4CKDOW464DN5TGrUUL93kuMo694N832qt/F54aIuY3VWOD6JwOj12kJ14p3XRw22SsDZ5lw96PhrEwgCggK4EqY0FS7jxC217a/X2mng7KJMRqo4mxAubhQG8Gi84vIKh0n8MOrwPrkJj9DsUIENB79pP3PmHFZPJz8buQarQbg1QIN3c7vHmTMA5kx1FkyZGQxa76o5GyOk9kbajiDsRk8Oz+UHIVyqBC0rKFkeu5M8oB+4AMDrIpQIjum2/7vNaszE7ktvkV9mEI/SFRmOb6l+kfudmvA50AhMbK1NngQm7rQNmuqWziPYos8XTNjg0rnxU80exmBmSY3i/SPMSAHkdDOPOUXCubXWQ/rf5N1dypp/tTjFpy3N8M62M62mLvIq5wd46dj0ccsaWPK3YL2JDKR+f68jUCzlyHyr+vQ=
   - secure: aQpsVq1FsgQdc6HY6qFQPc+hApvVjWSffHp8IbvtoHA1hfKZdU1i0Kb/DGeqQeF2JGqUpCG06kwNARVL2yf6MRGRE2uaGJMmQl1FNHTD6vj7OGB/yIL6SByjd8ktsr8m2aehrI+ZDJBrDtuDvD9LpL76rXSIVqhMHZD8/btfVXcbQL8lQBgXnG4XLGgK/3r/r6SmiRFFQ8dzKPFZL2nhsec8fZoDgmKKQKqdBtuq4hj1f2xDXvYVG2R9HiRshl6VnxxBopeqwS/91pNe5/vQuSVDIgieYb5IelyWJxkdXoogtUJSL1k3OD1IkLzDudrpk9kBeVTr9TOaVSZjbt4zNADPWDb0/Nu2EZxj/OdONnesu76DiIqpaS6w6JxKXDRBJrzs+OzrOi5DBP9MW0QmUXP1AkWvCbCSQAFknx7a2Q6wsEZVqQ90q2HmxsLflUmTjWCnDx31ZoQbi3sPRt1wVShrSDDdiyEwwb0SUpKWPbkZHfTejbV7OypOFMqur+2M/I6vBHL0iQu7WK8RVaPAlcYaKDFU/bmGNp4k7uSlD8ksdXpxOvpmJ2+jekxgQ5JKlPekt4ioPsif1tx/QPjwi4wI5aGbGnwp9ywXR9izhAyvMrRhdimMJO/OJQtgkVxd9G+daZjqus00WsR+n38edp1WlpuSDKWtbjJbKk1q03M=
+  - secure: e9go99RbAldaiPe8ySYAFkx11vCwy6QyIangIVoyeS8uYOijCBlvhJ5D5z28KpwM4rQ6RJBUtxk4EdNtVNdq1QIIC0QqFRbNJbiYyAoOjzsEWb+5oL79mI/geORY7WBao71NmzahDaQ0GUWuzQoadsEGT/buyyo9i1HzWkIPCsk8J7LrvoRIO61l2emNK3GXCmW8sq6BgMg2qhDeB4MIoBUT75zY/NGzrN4OUK0g1JADh9/uDMH8E2iZDqv3Qna+NDUdVTPwoPdxKo7/83aNmVuf1/tAOxRhD1zkzwmklFdU7ZpJmbZ3QB6qtpr46C/KARixIVdx3wDowC5b1ZzRV1r/wyhjWRW/l6OGgwRL76Vw9HBTSaxX7m22y441ayoRhxY34KhF2PNzzaA/JaIhnaUfsipEYSrGa+nxYWlYk5k0lzhwFue7N9fzP9NV2gWo+6/vYFBN4kdA+RZCoDQS5OlYz0fRee/p72CIG4l3Lvd74L6r/0F2FedjU67i7gUjQ8vp7Wkox65sYkujL8Sod9kRkiBDolvQ9iLBbUQBF4SQsiurQTNRrYRlDvDe8QdZk0HodXMfSV3PLD27mJlOGqoaW3EZsI1G7hT50oCMjD9tNDIkqphLZA7/RDntI1GLvB/QwdoeA1IcGBX/VG/3ecVDkMuJZnJAeIsITObHPQQ=
