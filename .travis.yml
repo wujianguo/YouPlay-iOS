@@ -1,6 +1,7 @@
 language: objective-c
 osx_image: xcode7.2
 before_script:
+- echo $ENCRYPTION_SECRET
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/profile/wujianguoAdHoc.mobileprovision.enc -d -a -out scripts/profile/wujianguoAdHoc.mobileprovision
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/sanliaoDistribution.cer.enc -out scripts/certs/sanliaoDistribution.cer
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/sanliaoDistribution.p12.enc -out scripts/certs/sanliaoDistribution.p12
