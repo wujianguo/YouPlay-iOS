@@ -1,7 +1,5 @@
 language: objective-c
 osx_image: xcode7.2
-before_script:
-- ./scripts/add-key.sh
 script:
 - xctool -project YouPlay-iOS.xcodeproj -scheme YouPlay-iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES
 after_success:
@@ -19,3 +17,4 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_e2214e7c8d4d_key -iv $encrypted_e2214e7c8d4d_iv
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
+- ./scripts/add-key.sh
