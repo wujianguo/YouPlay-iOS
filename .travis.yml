@@ -24,7 +24,7 @@ before_script:
 script:
 - xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME -sdk iphoneos -configuration Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
 after_success:
-- ./scripts/archiv-and-deploy.sh
+- ./scripts/archive-and-deploy.sh
 after_script:
 - ./scripts/remove-key.sh
 notifications:
