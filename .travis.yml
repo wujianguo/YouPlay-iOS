@@ -28,7 +28,8 @@ after_success:
 - curl -F "file=@$PWD/build/Release-iphoneos/$APP_NAME.ipa" -F "uKey=$PGYER_USER_KEY" -F "_api_key=$PGYER_API_KEY" http://www.pgyer.com/apiv1/app/upload
 
 after_script:
-- ./scripts/remove-key.sh
+- security delete-keychain ios-build.keychain
+- rm -f ~/Library/MobileDevice/Provisioning\ Profiles/$PROFILE_NAME.mobileprovision
 notifications:
   email: false
 env:
@@ -39,7 +40,4 @@ env:
 before_install:
 - openssl aes-256-cbc -K $encrypted_e2214e7c8d4d_key -iv $encrypted_e2214e7c8d4d_iv
   -in secrets.tar.enc -out secrets.tar -d
-- chmod +x scripts/add-key.sh
-- chmod +x scripts/archive-and-deploy.sh
-- chmod +x scripts/remove-key.sh
 - tar xvf secrets.tar
