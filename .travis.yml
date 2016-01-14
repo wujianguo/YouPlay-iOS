@@ -17,6 +17,8 @@ before_script:
 - security import wujianguoDevelop.p12 -k ~/Library/Keychains/ios-build.keychain
   -P $KEY_PASSWORD -T /usr/bin/codesign
 - cp ./wujianguoDev.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+- echo "Add keychain to keychain-list"
+- security list-keychains -s ios-build.keychain
 script:
 - xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME -sdk iphoneos -configuration Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
 after_success:
