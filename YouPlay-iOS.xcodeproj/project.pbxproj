@@ -583,7 +583,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wujianguo.YouPlay-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d902e266-3e7e-4481-ba49-bfa519ca5b49";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YouPlay-iOS/YouPlay-iOS-Bridging-Header.h";
 			};
 			name = Debug;
@@ -598,7 +598,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wujianguo.YouPlay-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d902e266-3e7e-4481-ba49-bfa519ca5b49";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YouPlay-iOS/YouPlay-iOS-Bridging-Header.h";
 			};
 			name = Release;
