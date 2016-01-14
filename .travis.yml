@@ -41,3 +41,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_e2214e7c8d4d_key -iv $encrypted_e2214e7c8d4d_iv
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
+
+branches:
+  only:
+    - release
