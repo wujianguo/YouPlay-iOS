@@ -24,7 +24,9 @@ before_script:
 script:
 - xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME -sdk iphoneos -configuration Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
 after_success:
-- ./scripts/archive-and-deploy.sh
+- xcrun -log -sdk iphoneos PackageApplication "$PWD/build/Release-iphoneos/$APP_NAME.app" -o "$PWD/build/Release-iphoneos/$APP_NAME.ipa"
+- curl -F "file=@$PWD/build/Release-iphoneos/$APP_NAME.ipa" -F "uKey=$PGYER_USER_KEY" -F "_api_key=$PGYER_API_KEY" http://www.pgyer.com/apiv1/app/upload
+
 after_script:
 - ./scripts/remove-key.sh
 notifications:
