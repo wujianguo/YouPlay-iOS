@@ -1,5 +1,6 @@
 #!/bin/sh
 # - xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES
+# - xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME -sdk iphoneos -configuration Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY=$DEVELOPR_NAME PROVISIONING_PROFILE=$PROVISIONING_PROFILE_UUID
 
 PROVISIONING_PROFILE="$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_NAME.mobileprovision"
 OUTPUTDIR="$PWD/build/Release-iphoneos"
