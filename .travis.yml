@@ -18,7 +18,7 @@ before_script:
   -P $KEY_PASSWORD -T /usr/bin/codesign
 - cp ./wujianguoDev.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 script:
-- xcodebuild -project $APP_NAME.xcodeproj -scheme $APP_NAME -sdk iphoneos -configuration "Ad Hoc" 'CODE_SIGN_IDENTITY="iPhone Distribution: Shenzhen Sanliao Software Co.Ltd.(TJK5THP7XE)"' "PROVISIONING_PROFILE=~/Library/MobileDevice/Provisioning\ Profiles/wujianguoAdHoc.mobileprovision"
+- xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME -sdk iphoneos -configuration Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
 after_success:
 - ./scripts/archiv-and-deploy.sh
 after_script:
