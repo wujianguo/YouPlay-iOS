@@ -18,7 +18,7 @@ before_script:
   -P $KEY_PASSWORD -T /usr/bin/codesign
 - cp ./wujianguoDev.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 script:
-- xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
+- xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO
 after_success:
 - ./scripts/archiv-and-deploy.sh
 after_script:
