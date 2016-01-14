@@ -18,8 +18,7 @@ before_script:
   -P $KEY_PASSWORD -T /usr/bin/codesign
 - cp ./wujianguoDev.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 script:
-- xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME -sdk iphoneos -configuration
-  Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
+- xctool -project $APP_NAME.xcodeproj -scheme $APP_NAME OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY=$DEVELOPR_NAME
 after_success:
 - ./scripts/archiv-and-deploy.sh
 after_script:
@@ -28,8 +27,8 @@ notifications:
   email: false
 env:
   global:
-  - 'DEVELOPR_NAME = "iPhone Distribution:estationwu@yeah.net(ZAKSP29RLG)"'
-  - 'DEVELOPR_NAME_CO = "iPhone Distribution:Shenzhen Sanliao Software Co.Ltd.(TJK5THP7XE)"'
+  - 'DEVELOPR_NAME = "iPhone Developer: estationwu@yeah.net (ZAKSP29RLG)"'
+  - 'DEVELOPR_NAME_CO = "iPhone Distribution: Shenzhen Sanliao Software Co.Ltd.(TJK5THP7XE)"'
   - PROFILE_NAME = "wujianguoAdHoc.mobileprovision"
 before_install:
 - openssl aes-256-cbc -K $encrypted_e2214e7c8d4d_key -iv $encrypted_e2214e7c8d4d_iv
