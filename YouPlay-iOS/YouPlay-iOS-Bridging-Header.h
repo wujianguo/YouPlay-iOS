@@ -7,3 +7,4 @@
 //
 
 #import "UIImage+BlurredFrame.h"
+#import <MobileVLCKit/MobileVLCKit.h>

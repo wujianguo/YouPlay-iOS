@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import AVKit
+import AVFoundation
 
 class PlayRecord {
     
@@ -346,6 +348,10 @@ class DetailCollectionViewController: UICollectionViewController, DetailCollecti
         return cell
     }
     
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("segueToPlayerIdentifier", sender: indexPath)
+    }
+    
     func updateHeaderUI(cell: DetailCollectionHeaderCell) {
         cell.statusLabel.text = status
         cell.nameLabel.text = name
@@ -391,7 +397,17 @@ class DetailCollectionViewController: UICollectionViewController, DetailCollecti
     }
     
     func detailHeaderPlayButtonClick() {
-        
+        performSegueWithIdentifier("segueToPlayerIdentifier", sender: nil)
     }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let dvc = segue.destinationViewController as? PlayerViewController {
+            dvc.items = detail!.sources[curSource]
+            if let indexPath = sender as? NSIndexPath {
+                dvc.startIndex = indexPath.row
+            } else {
+                dvc.startIndex = curIndex
+            }
+        }
+    }
 }

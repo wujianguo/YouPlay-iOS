@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Detail Collection View Controller-->
@@ -40,10 +41,55 @@
                             <outlet property="delegate" destination="TEp-nw-NTF" id="c62-sb-3Nc"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <segue destination="1sW-e3-oAo" kind="presentation" identifier="segueToPlayerIdentifier" id="sUG-av-TOX"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bgg-mI-2jA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1338" y="1205"/>
+        </scene>
+        <!--Player View Controller-->
+        <scene sceneID="2mH-RD-MKl">
+            <objects>
+                <viewController id="1sW-e3-oAo" customClass="PlayerViewController" customModule="YouPlay_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qit-OV-ORk"/>
+                        <viewControllerLayoutGuide type="bottom" id="qMI-va-Ps3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tGf-Vp-vMm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vcA-JT-fp6">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJS-9E-mcu">
+                                <rect key="frame" x="20" y="28" width="22" height="22"/>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="closeButtonClick:" destination="1sW-e3-oAo" eventType="touchUpInside" id="Hqh-uy-lhs"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vcA-JT-fp6" firstAttribute="leading" secondItem="tGf-Vp-vMm" secondAttribute="leading" id="1ZT-Mr-Hck"/>
+                            <constraint firstItem="vcA-JT-fp6" firstAttribute="bottom" secondItem="qMI-va-Ps3" secondAttribute="top" id="6MY-oc-tdk"/>
+                            <constraint firstItem="KJS-9E-mcu" firstAttribute="top" secondItem="qit-OV-ORk" secondAttribute="bottom" constant="8" symbolic="YES" id="EWw-I3-fTu"/>
+                            <constraint firstItem="vcA-JT-fp6" firstAttribute="top" secondItem="tGf-Vp-vMm" secondAttribute="top" id="QEV-bI-Vsl"/>
+                            <constraint firstAttribute="trailing" secondItem="vcA-JT-fp6" secondAttribute="trailing" id="fgB-Wg-k6b"/>
+                            <constraint firstItem="KJS-9E-mcu" firstAttribute="leading" secondItem="tGf-Vp-vMm" secondAttribute="leadingMargin" id="q4s-8Y-WbK"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="playerView" destination="vcA-JT-fp6" id="2Cg-Sm-Uzj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYM-Jw-FZi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2083" y="1205"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="jMD-WD-R7N">
@@ -135,4 +181,7 @@
             <point key="canvasLocation" x="1338" y="448"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="close" width="22" height="22"/>
+    </resources>
 </document>

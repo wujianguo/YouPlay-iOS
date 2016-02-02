@@ -26,6 +26,8 @@
 		8167FBDA1C3C0148005F929B /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167FBD91C3C0148005F929B /* MovieListViewController.swift */; };
 		8167FBE51C3C16CE005F929B /* PhotoOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167FBE41C3C16CE005F929B /* PhotoOperations.swift */; };
 		816C74B91C427905006A1E34 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816C74B81C427905006A1E34 /* PlayerViewController.swift */; };
+		81BAA6CD1C60B9AC002DEF54 /* SupportForVLC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 81BAA6CC1C60B9AC002DEF54 /* SupportForVLC.mm */; };
+		E8EE4D49E9F40A15E80BD465 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 084AFAE165928E80F5026778 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		084AFAE165928E80F5026778 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D21A03D677B98A29FE6B57A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5C7D3BE5C502A6E28617661B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		812E2ACA1C37893F0007F852 /* YouPlay-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "YouPlay-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		812E2ACD1C37893F0007F852 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		812E2AD21C37893F0007F852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -160,6 +165,7 @@
 		8167FBD91C3C0148005F929B /* MovieListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
 		8167FBE41C3C16CE005F929B /* PhotoOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoOperations.swift; sourceTree = "<group>"; };
 		816C74B81C427905006A1E34 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		81BAA6CC1C60B9AC002DEF54 /* SupportForVLC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SupportForVLC.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,17 +175,28 @@
 			files = (
 				815476441C3A845F0075706E /* Alamofire.framework in Frameworks */,
 				815476771C3BAA300075706E /* SnapKit.framework in Frameworks */,
+				E8EE4D49E9F40A15E80BD465 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		61825B30F56CE269809FD7FE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				084AFAE165928E80F5026778 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		812E2AC11C37893F0007F852 = {
 			isa = PBXGroup;
 			children = (
 				812E2ACC1C37893F0007F852 /* YouPlay-iOS */,
 				812E2ACB1C37893F0007F852 /* Products */,
+				8D13D4D7FF079CCF7CD7E2E3 /* Pods */,
+				61825B30F56CE269809FD7FE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -204,6 +221,7 @@
 		8154760A1C3A79470075706E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				81BAA6CC1C60B9AC002DEF54 /* SupportForVLC.mm */,
 				812E2AD41C37893F0007F852 /* YouPlay_iOS.xcdatamodeld */,
 				812E2ADC1C37893F0007F852 /* Info.plist */,
 				812E2AD71C37893F0007F852 /* Assets.xcassets */,
@@ -276,6 +294,15 @@
 			path = "UIImage+BlurredFrame";
 			sourceTree = "<group>";
 		};
+		8D13D4D7FF079CCF7CD7E2E3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0D21A03D677B98A29FE6B57A /* Pods.debug.xcconfig */,
+				5C7D3BE5C502A6E28617661B /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -283,10 +310,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 812E2ADF1C37893F0007F852 /* Build configuration list for PBXNativeTarget "YouPlay-iOS" */;
 			buildPhases = (
+				EE0955114731B2310A7C052F /* Check Pods Manifest.lock */,
 				812E2AC61C37893F0007F852 /* Sources */,
 				812E2AC71C37893F0007F852 /* Frameworks */,
 				812E2AC81C37893F0007F852 /* Resources */,
 				8154763D1C3A80DE0075706E /* Embed Frameworks */,
+				AC048A1C77017A633A201315 /* Embed Pods Frameworks */,
+				2EBECD686CB2FF4013FD43B6 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -311,7 +341,6 @@
 				TargetAttributes = {
 					812E2AC91C37893F0007F852 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = TJK5THP7XE;
 					};
 				};
 			};
@@ -436,6 +465,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2EBECD686CB2FF4013FD43B6 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC048A1C77017A633A201315 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE0955114731B2310A7C052F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		812E2AC61C37893F0007F852 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -446,6 +523,7 @@
 				8154768A1C3BBD9C0075706E /* Util.swift in Sources */,
 				8167FBE51C3C16CE005F929B /* PhotoOperations.swift in Sources */,
 				815476801C3BB58E0075706E /* UIImage+BlurredFrame.m in Sources */,
+				81BAA6CD1C60B9AC002DEF54 /* SupportForVLC.mm in Sources */,
 				816C74B91C427905006A1E34 /* PlayerViewController.swift in Sources */,
 				815476431C3A83380075706E /* YouPlayItem.swift in Sources */,
 				815476611C3B9CB90075706E /* XCGLogger.swift in Sources */,
@@ -576,30 +654,34 @@
 		};
 		812E2AE01C37893F0007F852 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D21A03D677B98A29FE6B57A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Sanliao Software Co. Ltd. (TJK5THP7XE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "YouPlay-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wujianguo.YouPlay-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "22fb4b43-e9f1-4fc6-b00c-b4522d32340d";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YouPlay-iOS/YouPlay-iOS-Bridging-Header.h";
 			};
 			name = Debug;
 		};
 		812E2AE11C37893F0007F852 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C7D3BE5C502A6E28617661B /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Sanliao Software Co. Ltd. (TJK5THP7XE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "YouPlay-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wujianguo.YouPlay-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "22fb4b43-e9f1-4fc6-b00c-b4522d32340d";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YouPlay-iOS/YouPlay-iOS-Bridging-Header.h";
 			};
 			name = Release;
