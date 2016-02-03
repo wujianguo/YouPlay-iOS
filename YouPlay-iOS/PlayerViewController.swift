@@ -8,7 +8,6 @@
 
 import UIKit
 
-private let YouParseApi = "https://youplay.leanapp.cn/api/v1"
 
 class PlayerViewController: UIViewController {
     
@@ -16,8 +15,15 @@ class PlayerViewController: UIViewController {
         super.viewDidLoad()
         player.drawable = playerView
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "notifyPlayerStateChanged:", name: VLCMediaPlayerStateChanged, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "notifyPlayerTimeChanged:", name: VLCMediaPlayerTimeChanged, object: nil)
         NSTimer.scheduledTimerWithTimeInterval(60*20, target: self, selector: "handleUpdateSteamUrlTimer:", userInfo: nil, repeats: true)
         startPlay()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: VLCMediaPlayerStateChanged, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: VLCMediaPlayerTimeChanged, object: nil)
     }
     
     var items: YouPlaySource!
@@ -38,14 +44,15 @@ class PlayerViewController: UIViewController {
             index = 0
             startIndex += 1
             startPlay()
+            return
         }
+        print("play \(index)")
         player.setMedia(VLCMedia(URL: NSURL(string: urls[index])))
         player.play()
         index += 1
     }
     
     func handleUpdateSteamUrlTimer(timer: NSTimer) {
-        print("timer")
         queryStreamUrls(items.urls[startIndex]) { (us) -> Void in
             self.urls = us
         }
@@ -53,11 +60,43 @@ class PlayerViewController: UIViewController {
     
     func notifyPlayerStateChanged(notification: NSNotification) {
         print("notifyPlayerStateChanged: \(VLCMediaPlayerStateToString(player.state()))")
-        if player.state() == VLCMediaPlayerStateEnded {
+        if player.state() == VLCMediaPlayerStateStopped {
             playNext()
         }
     }
     
+    func notifyPlayerTimeChanged(notification: NSNotification) {
+        beginTimeLabel.text = "\(player.time())"
+        guard !dragging else { return }
+        if player.remainingTime.numberValue != nil && player.time().numberValue != nil {
+            let duration = VLCTime(number: NSNumber(float: (player.time().numberValue.floatValue - player.remainingTime.numberValue.floatValue)))
+            endTimeLabel.text = "\(duration)"
+            timeSlider.maximumValue = duration.numberValue.floatValue
+            timeSlider.setValue(player.time().numberValue.floatValue, animated: true)
+        }
+    }
+    
+    var dragging = false
+    @IBAction func sliderTouchDown(sender: UISlider) {
+        dragging = true
+    }
+    
+    @IBAction func sliderTouchUpInside(sender: UISlider) {
+        dragging = false
+        player.setTime(VLCTime(number: NSNumber(float: sender.value)))
+    }
+
+    @IBAction func sliderTouchUpOutside(sender: UISlider) {
+        dragging = false
+        player.setTime(VLCTime(number: NSNumber(float: sender.value)))
+    }
+    
+    
+    @IBOutlet weak var beginTimeLabel: UILabel!
+    
+    @IBOutlet weak var endTimeLabel: UILabel!
+    
+    @IBOutlet weak var timeSlider: UISlider!
     
     @IBOutlet weak var playerView: UIView!
     

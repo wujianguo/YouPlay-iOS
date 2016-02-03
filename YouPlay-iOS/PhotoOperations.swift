@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class PendingOperations {
     lazy var downloadsInProgress = [NSIndexPath: NSOperation]()
     lazy var downloadQueue: NSOperationQueue = {

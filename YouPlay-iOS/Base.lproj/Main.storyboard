@@ -72,19 +72,62 @@
                                     <action selector="closeButtonClick:" destination="1sW-e3-oAo" eventType="touchUpInside" id="Hqh-uy-lhs"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANG-B5-Xyw">
+                                <rect key="frame" x="28" y="571" width="35" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="nor-9o-ixU"/>
+                                    <constraint firstAttribute="width" constant="35" id="v8S-LB-Dnl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hA6-6W-DM0">
+                                <rect key="frame" x="69" y="567" width="462" height="31"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="3l0-hY-FPI"/>
+                                </constraints>
+                                <color key="maximumTrackTintColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="sliderTouchDown:" destination="1sW-e3-oAo" eventType="touchDown" id="7Gl-FW-9Bx"/>
+                                    <action selector="sliderTouchUpInside:" destination="1sW-e3-oAo" eventType="touchUpInside" id="p0F-of-9xe"/>
+                                    <action selector="sliderTouchUpOutside:" destination="1sW-e3-oAo" eventType="touchUpOutside" id="b2H-91-aRy"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUR-YX-wkP">
+                                <rect key="frame" x="537" y="571" width="35" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="sQz-Py-sdU"/>
+                                    <constraint firstAttribute="height" constant="21" id="sgn-ri-Fnr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vcA-JT-fp6" firstAttribute="leading" secondItem="tGf-Vp-vMm" secondAttribute="leading" id="1ZT-Mr-Hck"/>
                             <constraint firstItem="vcA-JT-fp6" firstAttribute="bottom" secondItem="qMI-va-Ps3" secondAttribute="top" id="6MY-oc-tdk"/>
+                            <constraint firstItem="hA6-6W-DM0" firstAttribute="leading" secondItem="ANG-B5-Xyw" secondAttribute="trailing" constant="8" symbolic="YES" id="8Th-zg-Kda"/>
                             <constraint firstItem="KJS-9E-mcu" firstAttribute="top" secondItem="qit-OV-ORk" secondAttribute="bottom" constant="8" symbolic="YES" id="EWw-I3-fTu"/>
+                            <constraint firstItem="BUR-YX-wkP" firstAttribute="leading" secondItem="hA6-6W-DM0" secondAttribute="trailing" constant="8" symbolic="YES" id="Fmz-Y5-quy"/>
+                            <constraint firstItem="hA6-6W-DM0" firstAttribute="centerY" secondItem="BUR-YX-wkP" secondAttribute="centerY" id="GvM-fg-ZaB"/>
                             <constraint firstItem="vcA-JT-fp6" firstAttribute="top" secondItem="tGf-Vp-vMm" secondAttribute="top" id="QEV-bI-Vsl"/>
+                            <constraint firstItem="ANG-B5-Xyw" firstAttribute="leading" secondItem="tGf-Vp-vMm" secondAttribute="leadingMargin" constant="8" id="Y8h-cb-KML"/>
+                            <constraint firstItem="qMI-va-Ps3" firstAttribute="top" secondItem="BUR-YX-wkP" secondAttribute="bottom" constant="8" symbolic="YES" id="a7N-Qb-LlC"/>
                             <constraint firstAttribute="trailing" secondItem="vcA-JT-fp6" secondAttribute="trailing" id="fgB-Wg-k6b"/>
                             <constraint firstItem="KJS-9E-mcu" firstAttribute="leading" secondItem="tGf-Vp-vMm" secondAttribute="leadingMargin" id="q4s-8Y-WbK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BUR-YX-wkP" secondAttribute="trailing" constant="8" id="qRM-AR-612"/>
+                            <constraint firstItem="qMI-va-Ps3" firstAttribute="top" secondItem="ANG-B5-Xyw" secondAttribute="bottom" constant="8" symbolic="YES" id="vcP-jS-5BT"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="beginTimeLabel" destination="ANG-B5-Xyw" id="JCZ-pn-qZk"/>
+                        <outlet property="endTimeLabel" destination="BUR-YX-wkP" id="nW1-nX-AQs"/>
                         <outlet property="playerView" destination="vcA-JT-fp6" id="2Cg-Sm-Uzj"/>
+                        <outlet property="timeSlider" destination="hA6-6W-DM0" id="ZD0-0w-dQ1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYM-Jw-FZi" userLabel="First Responder" sceneMemberID="firstResponder"/>
