@@ -120,24 +120,15 @@ func queryDetail(detailApi: String, complete: (YouPlayDetail?) -> Void) {
     }
 }
 
-extension String {
-    /**
-     Encode a String to Base64
-     
-     :returns:
-     */
-    func toBase64()->String {
-        
-        let data = self.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        return data!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
-        
+
+private extension String {
+    var base64Value: String {
+        return self.dataUsingEncoding(NSUTF8StringEncoding)!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
     }
-    
 }
 
 func queryStreamUrls(url: String, complete: ([String]) -> Void) {
-    Alamofire.request(.GET, "\(api)/videos2/\(url.toBase64())").responseJSON { (data) -> Void in
+    Alamofire.request(.GET, "\(api)/videos2/\(url.base64Value)").responseJSON { (data) -> Void in
         guard data.result.isSuccess && data.data != nil else {
             complete([])
             return
